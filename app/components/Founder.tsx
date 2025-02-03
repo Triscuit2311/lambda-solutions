@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/image";
 
 export default function Founder() {
   return (
@@ -15,24 +15,30 @@ export default function Founder() {
             />
           </div>
           <div className="md:w-1/2 md:pl-12">
-            <h2 className="text-3xl font-bold mb-4 text-burgundy">Meet Our Founder</h2>
-            <h3 className="text-xl font-semibold mb-2 text-crimson">John Lambda</h3>
+            <h2 className="text-3xl font-bold mb-4 text-burgundy">
+              Meet The Founder
+            </h2>
+            <h3 className="text-xl font-semibold mb-2 text-crimson">
+              Dante Trisciuzzi
+            </h3>
             <p className="text-secondary mb-4">
-              A veteran and automotive enthusiast with over 20 years of experience in software engineering and
-              motorsports.
+              A USMC veteran and automotive enthusiast, with nearly two decades
+              of experience building performance software.
             </p>
             <p className="text-secondary mb-4">
-              John's passion for racing and technology led him to create Lambda Solutions, combining cutting-edge
-              software development with the high-octane world of motorsports.
+              Dante has a passion for cars and motorsports in general. He has
+              expertise in electrical engineering, software engineering, systems
+              design, and engine tuning. He loves fabrication, suspension, and
+              obviously: math!
             </p>
             <p className="text-secondary">
-              His mission is to push the boundaries of what's possible in racing, providing teams with the tools they
-              need to achieve peak performance on and off the track.
+              Our mission is to keep cars fun; we build tools to achieve peak
+              performance on the track, in the dirt, and on the way to the
+              grocery store.
             </p>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
-

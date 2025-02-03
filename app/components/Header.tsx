@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import ContactModal from "./ContactModal"
-import Image from "next/image"
+import { useState } from "react";
+import Link from "next/link";
+import ContactModal from "./ContactModal";
+import Image from "next/image";
 
 export default function Header() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId)
+    const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" })
+      section.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <header className="bg-accent-light shadow-md">
@@ -22,11 +22,11 @@ export default function Header() {
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/lambda_solutions-NpmfBrAhAO6EJNxq3kLUMRuS2Reyi5.svg"
             alt="Lambda Solutions Logo"
-            width={40}
-            height={40}
+            width={120}
+            height={120}
             priority
           />
-          <span className="ml-2 text-xl font-bold text-primary">Lambda Solutions</span>
+          {/* <span className="ml-2 text-xl font-bold text-primary">Lambda Solutions</span> */}
         </Link>
         <nav>
           <ul className="flex space-x-6">
@@ -35,17 +35,17 @@ export default function Header() {
                 onClick={() => scrollToSection("features")}
                 className="text-primary hover:text-crimson transition duration-300"
               >
-                Features
+                Solutions
               </button>
             </li>
-            <li>
+            {/* <li>
               <button
                 onClick={() => scrollToSection("testimonials")}
                 className="text-primary hover:text-orange transition duration-300"
               >
                 Testimonials
               </button>
-            </li>
+            </li> */}
             <li>
               <button
                 onClick={() => scrollToSection("founder")}
@@ -57,14 +57,23 @@ export default function Header() {
           </ul>
         </nav>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            const email = "lambda.solutions.llc@proton.me";
+            const subject = encodeURIComponent("Inquiry about your services");
+            const body = encodeURIComponent(
+              "Hello,\n\nI would like to get more information about...",
+            );
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+          }}
           className="bg-burgundy text-accent-light px-4 py-2 rounded hover:bg-crimson transition duration-300"
         >
           Contact Us
         </button>
       </div>
-      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </header>
-  )
+  );
 }
-

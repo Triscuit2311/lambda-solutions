@@ -1,46 +1,71 @@
-"use client"
+"use client";
 
-import React from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { Fragment } from "react"
-import { X } from "lucide-react"
+import React from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
+import { X } from "lucide-react";
+import { Resend } from "resend";
+
+const resend = new Resend("re_65CWJuUU_Mi35D8LoFcbCCZNaiGnoBQYn"); // Replace with your actual API key
+
+//re_65CWJuUU_Mi35D8LoFcbCCZNaiGnoBQYn
 
 interface ContactModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
-  const [email, setEmail] = React.useState("")
-  const [message, setMessage] = React.useState("")
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Here you would typically send this data to your backend
-    console.log("Sending email to: fake@email.com")
-    console.log("From:", email)
-    console.log("Message:", message)
+    console.log("Sending email to: fake@email.com");
+    console.log("From:", email);
+    console.log("Message:", message);
 
-    // Simulate sending a copy to the user
-    const now = new Date()
-    console.log(`
-      To: ${email}
-      Subject: Thank you for contacting Lambda Solutions
-      
-      Dear valued customer,
+    try {
+      const response = await resend.emails.send({
+        from: email, // Use a verified sender email
+        to: ["dantetrisciuzzi@proton.me"],
+        subject: "lambda-solution inquire",
+        text: `From: ${email}\n\nMessage: ${message}`,
+      });
 
-      Thank you for reaching out to us on ${now.toLocaleDateString()} at ${now.toLocaleTimeString()}.
-      We have received your message and will get back to you as soon as possible.
+      //console.log("Email sent successfully:", response);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
 
-      Best regards,
-      Lambda Solutions Team
-    `)
+    try {
+      const now = new Date();
+      const response = await resend.emails.send({
+        from: "your@email.com", // Use a verified sender email
+        to: [email],
+        subject: "Thank you for contacting Lambda Solutions, LLC",
+        text: `
+              Dear valued customer,
 
-    onClose()
-    setEmail("")
-    setMessage("")
-  }
+              Thank you for reaching out to us on ${now.toLocaleDateString()} at ${now.toLocaleTimeString()}.
+              We have received your message and will get back to you as soon as possible.
+
+              Best regards,
+              Lambda Solutions Team
+            `,
+      });
+
+      console.log("Email sent successfully:", response);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+
+    onClose();
+    setEmail("");
+    setMessage("");
+  };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -70,16 +95,24 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div className="relative">
-                  <Dialog.Title className="text-lg font-medium text-gray-900 mb-4">Contact Us</Dialog.Title>
-                  <button onClick={onClose} className="absolute top-0 right-0 text-gray-500 hover:text-gray-700">
+                  <Dialog.Title className="text-lg font-medium text-gray-900 mb-4">
+                    Contact Us
+                  </Dialog.Title>
+                  <button
+                    onClick={onClose}
+                    className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
+                  >
                     <X size={24} />
                   </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                      Email
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Your Email
                     </label>
                     <input
                       type="email"
@@ -91,7 +124,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Message
                     </label>
                     <textarea
@@ -116,6 +152,5 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         </div>
       </Dialog>
     </Transition>
-  )
+  );
 }
-
